@@ -2,9 +2,10 @@ plugins {
 	id("fabric-loom") version("1.10.5")
 }
 
-val version = "1.0.0"
+val MOD_VERSION = "1.0.0"
 val FABRIC_VERSION = "0.19.3"
 val MINECRAFT_VERSION = "1.20.1"
+val RELEASE_TAG = "mc${MINECRAFT_VERSION}-${MOD_VERSION}"
 
 dependencies {
 	minecraft("com.mojang:minecraft:${MINECRAFT_VERSION}")
@@ -30,10 +31,10 @@ loom {
 }
 
 tasks.processResources {
-	inputs.property("version", version)
+	inputs.property("version", RELEASE_TAG)
 
 	filesMatching("fabric.mod.json") {
-		expand("version" to version)
+		expand("version" to MOD_VERSION)
 	}
 }
 
