@@ -1,9 +1,9 @@
-# Transparent Gui Background
+[![build](https://github.com/MagicDevM/transparent-gui-background/actions/workflows/build.yml/badge.svg)](https://github.com/MagicDevM/transparent-gui-background/actions/workflows/build.yml)
 
-## Setup
+<H2 align="center">Transparent Gui Background</H2>
+This brings 1.21's new gui background system to later versions of Minecraft! So that you can stop seeing the ugly dirt background.
 
-For setup instructions, please see the [Fabric Documentation page](https://docs.fabricmc.net/develop/getting-started/creating-a-project#setting-up) related to the IDE that you are using.
+*Once you see the transparent background you can't unsee the dirt background*
 
 ## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+Transparent Gui Background is licensed under the MIT license.

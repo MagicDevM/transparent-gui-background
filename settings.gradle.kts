@@ -9,9 +9,8 @@ pluginManagement {
 	}
 
 	plugins {
-		id("net.fabricmc.fabric-loom-remap") version providers.gradleProperty("loom_version")
+		id("fabric-loom") version("1.10.5")
 	}
 }
 
-// Should match your modid
 rootProject.name = "transparent-gui-background"
