@@ -18,6 +18,11 @@
 			"magic.transparent_gui_background.TransparentGuiBackground"
 		]
 	},
+	
+	"mixins": [
+		"transparent-gui-background.mixins.json"
+	],
+	
 	"depends": {
 		"fabricloader": ">=0.19.3",
 		"minecraft": "~1.20.1",

@@ -5,7 +5,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: staging
-    
+
     steps:
       - name: Extract current branch name
         shell: bash
