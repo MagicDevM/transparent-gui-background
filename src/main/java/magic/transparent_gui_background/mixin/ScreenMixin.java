@@ -72,7 +72,7 @@ public class ScreenMixin {
   @Unique
   protected void renderPanorama(GuiGraphics graphics, float delta) {
     // render panoroma through our implementation
-    ((PanoramaRendererExtended) this.panoramaRenderer).TGB$renderPanorama(graphics, this.width, this.height, delta, 0.0F);
+    ((PanoramaRendererExtended) panoramaRenderer).TGB$renderPanorama(graphics, this.width, this.height, delta, 0.0F);
   }
 
   @Unique
