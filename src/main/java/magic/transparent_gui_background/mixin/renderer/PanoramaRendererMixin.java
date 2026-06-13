@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Unique;
 public class PanoramaRendererMixin implements PanoramaRendererExtended {
   // Get the Panorama overlay asset
   @Unique
-  private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/panorama_overlay.png");
+  private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/title/background/panorama_overlay.png");
   
   @Shadow
   @Final

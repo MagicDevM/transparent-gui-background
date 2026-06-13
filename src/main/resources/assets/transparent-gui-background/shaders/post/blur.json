@@ -4,8 +4,8 @@
     },
     "passes": [
         {
-            "vertex_shader": "minecraft:program/screenquad",
-            "fragment_shader": "transparent-gui-background:post/box_blur",
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "transparent-gui-background:program/box_blur",
             "inputs": [
                 {
                     "sampler_name": "In",
@@ -30,8 +30,8 @@
             }
         },
         {
-            "vertex_shader": "minecraft:program/screenquad",
-            "fragment_shader": "transparent-gui-background:post/box_blur",
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "transparent-gui-background:program/box_blur",
             "inputs": [
                 {
                     "sampler_name": "In",
@@ -55,8 +55,8 @@
                 ]
             }
         }, {
-            "vertex_shader": "minecraft:program/screenquad",
-            "fragment_shader": "transparent-gui-background:post/box_blur",
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "transparent-gui-background:program/box_blur",
             "inputs": [
                 {
                     "sampler_name": "In",
@@ -81,8 +81,8 @@
             }
         },
         {
-            "vertex_shader": "minecraft:program/screenquad",
-            "fragment_shader": "transparent-gui-background:post/box_blur",
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "transparent-gui-background:program/box_blur",
             "inputs": [
                 {
                     "sampler_name": "In",
@@ -107,8 +107,8 @@
             }
         },
         {
-            "vertex_shader": "minecraft:program/screenquad",
-            "fragment_shader": "transparent-gui-background:post/box_blur",
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "transparent-gui-background:program/box_blur",
             "inputs": [
                 {
                     "sampler_name": "In",
@@ -133,8 +133,8 @@
             }
         },
         {
-            "vertex_shader": "minecraft:program/screenquad",
-            "fragment_shader": "transparent-gui-background:post/box_blur",
+            "vertex_shader": "minecraft:core/screenquad",
+            "fragment_shader": "transparent-gui-background:program/box_blur",
             "inputs": [
                 {
                     "sampler_name": "In",

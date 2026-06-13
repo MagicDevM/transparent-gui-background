@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 public class GameRendererMixin implements GameRendererExtended {
   // Get the blur shader json file
   @Unique
-  private static final ResourceLocation blurShader = new ResourceLocation("transparent-gui-background").tryBuild("transparent-gui-background", "post_effect/blur.json");
+  private static final ResourceLocation blurShader = new ResourceLocation("transparent-gui-background").tryBuild("transparent-gui-background", "shaders/post/blur.json");
   
   // Get some essential variables
   @Shadow
