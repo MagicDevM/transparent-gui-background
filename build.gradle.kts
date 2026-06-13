@@ -15,6 +15,8 @@ dependencies {
 }
 
 loom {
+  accessWidenerPath.set(file("src/main/resources/transparent-gui-background.accesswidener"))
+  
   mixin {
     useLegacyMixinAp = false
   }
