@@ -35,7 +35,8 @@ public class GameRendererMixin implements GameRendererExtended {
   
   // Get some essential variables
   @Shadow
-  static final Logger LOGGER;
+  @Final
+  static Logger LOGGER;
   @Shadow
   @Final
   Minecraft minecraft;
