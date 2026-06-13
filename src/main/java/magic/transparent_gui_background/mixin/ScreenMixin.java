@@ -45,7 +45,7 @@ public class ScreenMixin {
   private static final ResourceLocation INWORLD_MENU_BACKGROUND = new ResourceLocation("transparent-gui-background").tryBuild("transparent_gui_background", "textures/gui/inworld_menu_background.png");
   
   // Create a new panoroma renderer instance
-  @Inject(method = "<clinit>", at = @At("HEAD"))
+  @Inject(method = "<clinit>", at = @At("TAIL"))
   private static void onStatic(CallbackInfo ci) {
     panoramaRenderer = new PanoramaRenderer(cubeMap);
   }
