@@ -31,7 +31,7 @@ loom {
 }
 
 tasks.processResources {
-	inputs.property("version", RELEASE_TAG)
+	inputs.property("version", MOD_VERSION)
 
 	filesMatching("fabric.mod.json") {
 		expand("version" to MOD_VERSION)

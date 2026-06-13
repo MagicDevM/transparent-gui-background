@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Unique;
 public class PanoramaRendererMixin implements PanoramaRendererExtended {
   // Get the Panorama overlay asset
   @Unique
-  public static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/panorama_overlay.png");
+  private static final ResourceLocation PANORAMA_OVERLAY = new ResourceLocation("textures/gui/panorama_overlay.png");
   
   @Shadow
   @Final
@@ -32,7 +32,7 @@ public class PanoramaRendererMixin implements PanoramaRendererExtended {
   // Shadow & get the wrap function
   // NOTE: An dummy body is provided because its an private method this is overriden later by mixin
   @Shadow
-  private float wrap(float a, float b) {
+  private static float wrap(float a, float b) {
     throw new AssertionError();
   }
   

@@ -30,9 +30,9 @@ public class ScreenMixin {
   
   // Generate CubeMap for panorama
   @Unique
-  public static final CubeMap cubeMap = new CubeMap(new ResourceLocation("textures/gui/title/background/panorama"));
+  private static final CubeMap cubeMap = new CubeMap(new ResourceLocation("textures/gui/title/background/panorama"));
   @Unique
-  protected static PanoramaRenderer panoramaRenderer;
+  private static PanoramaRenderer panoramaRenderer;
   
   // get the blur shader
   @Unique
@@ -51,7 +51,10 @@ public class ScreenMixin {
   }
   
   @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
-  private void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+  private void renderBackground(GuiGraphics graphics, CallbackInfo ci) {
+    // Get current delta value
+    float delta = minecraft.getFrameTime();
+
     // Check if player is in a world
     if (this.minecraft.level == null) {
       // load transparent panoroma
@@ -91,7 +94,7 @@ public class ScreenMixin {
   }
   
   @Unique
-  public static void renderMenuBackgroundTexture(final GuiGraphics graphics, final ResourceLocation menuBackground, final int x, final int y, final float u, final float v, final int width, final int height) {
+  private static void renderMenuBackgroundTexture(final GuiGraphics graphics, final ResourceLocation menuBackground, final int x, final int y, final float u, final float v, final int width, final int height) {
     int size = 32;
 
     // Render panoroma overlay
