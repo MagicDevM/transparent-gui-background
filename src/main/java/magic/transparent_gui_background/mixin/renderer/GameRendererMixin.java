@@ -84,7 +84,7 @@ public class GameRendererMixin implements GameRendererExtended {
   @Inject(method = "reloadShaders", at =
   @At(
     value = "INVOKE",
-    target = "Ljava/util/List;add(ILjava/util/E;)V",
+    target = "Ljava/util/List;add(Ljava/lang/Object;)Z",
     // insert right after the last method
     ordinal = 58,
     shift = At.Shift.AFTER
