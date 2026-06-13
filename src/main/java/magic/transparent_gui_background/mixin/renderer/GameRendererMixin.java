@@ -1,5 +1,6 @@
 package magic.transparent_gui_background.mixin.renderer;
 
+import magic.transparent_gui_background.mixin.utils.PostChainAccessor;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import magic.transparent_gui_background.gui.api.GameRendererExtended;
 import magic.transparent_gui_background.gui.api.PostChainExtended;
@@ -69,7 +70,7 @@ public class GameRendererMixin implements GameRendererExtended {
       // create an new PostChain pass
       this.blurEffect = new PostChain(this.minecraft.getTextureManager(), this.minecraft.getResourceManager(), this.minecraft.getMainRenderTarget(), blurShader);
       // Add our shader into the pass
-      this.blurEffect.load(this.minecraft.getTextureManager(), blurShader);
+      ((PostChainAccessor) this.blurEffect).invokeLoad(this.minecraft.getTextureManager(), blurShader);
     } catch (IOException e) {
       // Catch Weird exceptions
       LOGGER.warn("Failed to load shader: {}", blurShader, e);

@@ -14,6 +14,7 @@
 	"mixins": [
 	  "ScreenMixin",
 		"utils.PostChainMixin",
+		"utils.PostChainAccessor",
 		"renderer.GameRendererMixin",
 		"renderer.PanoramaRendererMixin"
 	]
