@@ -33,5 +33,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: sodium-artifacts-${{ steps.ref.outputs.branch }}
-          path: build/mods/*.jar
+          name: TGB-artifacts-${{ steps.ref.outputs.branch }}
+          path: build/libs/*.jar
