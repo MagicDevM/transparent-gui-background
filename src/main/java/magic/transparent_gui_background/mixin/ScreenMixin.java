@@ -34,10 +34,6 @@ public class ScreenMixin {
   @Unique
   private static PanoramaRenderer panoramaRenderer;
   
-  // get the blur shader
-  @Unique
-  private static final ResourceLocation blurShader = new ResourceLocation("transparent-gui-background").tryBuild("transparent-gui-background", "blur");
-  
   // Get necessary menu texture overlays
   @Unique
   private static final ResourceLocation MENU_BACKGROUND = new ResourceLocation("transparent-gui-background").tryBuild("transparent-gui-background", "textures/gui/menu_background.png");

@@ -22,6 +22,9 @@ public class PostChainMixin implements PostChainExtended {
   @Unique
   @Override
   public void TGB$setUniform(String type, float value) {
+    // Just for null safety
+    //if (passes == null) return;
+    
     // iterate over all passes
     for(PostPass pass : this.passes) {
       // apply blur effect through safe uniform
