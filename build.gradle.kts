@@ -2,7 +2,7 @@ plugins {
 	id("fabric-loom") version("1.10.5")
 }
 
-val MOD_VERSION = "1.0.0"
+val MOD_VERSION = project.property("mod_version").toString()
 val FABRIC_VERSION = "0.19.3"
 val MINECRAFT_VERSION = "1.20.1"
 val RELEASE_TAG = "mc${MINECRAFT_VERSION}-${MOD_VERSION}"
