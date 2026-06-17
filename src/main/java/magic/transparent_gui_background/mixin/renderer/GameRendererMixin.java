@@ -69,6 +69,9 @@ public class GameRendererMixin implements GameRendererExtended {
     try {
       // create an new PostChain pass
       this.blurEffect = new PostChain(this.minecraft.getTextureManager(), this.minecraft.getResourceManager(), this.minecraft.getMainRenderTarget(), blurShader);
+      // Correctly assign matrices and resize the screen
+      this.blurEffect.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
+
       // Add our shader into the pass
       ((PostChainAccessor) this.blurEffect).invokeLoad(this.minecraft.getTextureManager(), blurShader);
     } catch (IOException e) {
