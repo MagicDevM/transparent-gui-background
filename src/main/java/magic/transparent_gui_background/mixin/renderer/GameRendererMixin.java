@@ -32,8 +32,8 @@ import org.slf4j.Logger;
 public class GameRendererMixin implements GameRendererExtended {
   // Get the blur shader json file
   @Unique
-  private static final ResourceLocation blurShader = new ResourceLocation("transparent-gui-background").tryBuild("transparent-gui-background", "shaders/post/blur.json");
-  
+  private static final ResourceLocation blurShader = new ResourceLocation("shaders/post/blur.json");
+
   // Get some essential variables
   @Shadow
   @Final
@@ -50,7 +50,7 @@ public class GameRendererMixin implements GameRendererExtended {
   @Override
   public void TGB$renderBlur(float radius, float delta) {
     // verify that the radius is more than or isequal to 1.0F
-    if (radius >= 1.0F) {
+    if (this.blurEffect != null && radius >= 1.0F) {
       // Apply blur effect
       ((PostChainExtended) this.blurEffect).TGB$setUniform("Radius", radius);
       // run our initialized blur shader
