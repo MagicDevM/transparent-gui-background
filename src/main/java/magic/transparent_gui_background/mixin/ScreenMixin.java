@@ -76,7 +76,7 @@ public class ScreenMixin {
     // render blurred panoroma through our implementation
     ((GameRendererExtended) this.minecraft.gameRenderer).TGB$renderBlur(5.0F, delta);
   }
-  
+
   @Unique
   protected void renderMenuBackground(final GuiGraphics graphics) {
     // render the panoroma overlay

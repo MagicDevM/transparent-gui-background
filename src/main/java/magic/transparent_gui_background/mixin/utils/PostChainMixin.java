@@ -13,7 +13,7 @@ import java.lang.String;
 import java.util.List;
 
 @Mixin(PostChain.class)
-public class PostChainMixin implements PostChainExtended {
+public class PostChainMixin implements PostChainExtended {¬
   // get all passes
   @Shadow
   @Final

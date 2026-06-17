@@ -41,11 +41,11 @@ public class GameRendererMixin implements GameRendererExtended {
   @Shadow
   @Final
   Minecraft minecraft;
-  
+
   // get post effects
   @Unique
   private PostChain blurEffect;
-  
+
   @Unique
   @Override
   public void TGB$renderBlur(float radius, float delta) {
@@ -53,11 +53,13 @@ public class GameRendererMixin implements GameRendererExtended {
     if (this.blurEffect != null && radius >= 1.0F) {
       // Apply blur effect
       ((PostChainExtended) this.blurEffect).TGB$setUniform("Radius", radius);
+      // Correctly assign matrices and resize the screen
+      this.blurEffect.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
       // run our initialized blur shader
       this.blurEffect.process(delta);
     }
   }
-  
+
   @Unique
   private void loadBlurEffect() {
     // check if it is already initialized
@@ -69,8 +71,6 @@ public class GameRendererMixin implements GameRendererExtended {
     try {
       // create an new PostChain pass
       this.blurEffect = new PostChain(this.minecraft.getTextureManager(), this.minecraft.getResourceManager(), this.minecraft.getMainRenderTarget(), blurShader);
-      // Correctly assign matrices and resize the screen
-      this.blurEffect.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
 
       // Add our shader into the pass
       ((PostChainAccessor) this.blurEffect).invokeLoad(this.minecraft.getTextureManager(), blurShader);
