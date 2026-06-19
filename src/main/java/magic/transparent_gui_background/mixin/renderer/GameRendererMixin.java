@@ -53,8 +53,6 @@ public class GameRendererMixin implements GameRendererExtended {
     if (this.blurEffect != null && radius >= 1.0F) {
       // Apply blur effect
       ((PostChainExtended) this.blurEffect).TGB$setUniform("Radius", radius);
-      // Correctly assign matrices and resize the screen
-      this.blurEffect.resize(this.minecraft.getWindow().getWidth(), this.minecraft.getWindow().getHeight());
       // run our initialized blur shader
       this.blurEffect.process(delta);
     }

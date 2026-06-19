@@ -2,7 +2,6 @@ package magic.transparent_gui_background.mixin;
 
 import magic.transparent_gui_background.gui.api.GameRendererExtended;
 import magic.transparent_gui_background.gui.api.PanoramaRendererExtended;
-
 import net.minecraft.client.gui.screens.Screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.PanoramaRenderer;
@@ -27,29 +26,29 @@ public class ScreenMixin {
   public int width;
   @Shadow
   public int height;
-  
+
   // Generate CubeMap for panorama
   @Unique
   private static final CubeMap cubeMap = new CubeMap(new ResourceLocation("textures/gui/title/background/panorama"));
   @Unique
   private static PanoramaRenderer panoramaRenderer;
-  
+
   // Get necessary menu texture overlays
   @Unique
   private static final ResourceLocation MENU_BACKGROUND = new ResourceLocation("transparent-gui-background").tryBuild("transparent-gui-background", "textures/gui/menu_background.png");
   @Unique
   private static final ResourceLocation INWORLD_MENU_BACKGROUND = new ResourceLocation("transparent-gui-background").tryBuild("transparent_gui_background", "textures/gui/inworld_menu_background.png");
-  
+
   // Create a new panoroma renderer instance
   @Inject(method = "<clinit>", at = @At("TAIL"))
   private static void onStatic(CallbackInfo ci) {
     panoramaRenderer = new PanoramaRenderer(cubeMap);
   }
-  
+
   @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
   private void renderBackground(GuiGraphics graphics, CallbackInfo ci) {
     // Get current delta value
-    float delta = minecraft.getFrameTime();
+    float delta = this.minecraft.getFrameTime();
 
     // Check if player is in a world
     if (this.minecraft.level == null) {
@@ -60,11 +59,11 @@ public class ScreenMixin {
     // render the blurred panoroma
     this.renderBlurredBackground(delta);
     this.renderMenuBackground(graphics);
-    
+
     // Cancel the entire method
     ci.cancel();
   }
-  
+
   @Unique
   protected void renderPanorama(GuiGraphics graphics, float delta) {
     // render panoroma through our implementation
@@ -88,7 +87,7 @@ public class ScreenMixin {
     // Verify if play is in a minecraft world or gui
     renderMenuBackgroundTexture(graphics, this.minecraft.level == null ? MENU_BACKGROUND : INWORLD_MENU_BACKGROUND, x, y, 0.0F, 0.0F, width, height);
   }
-  
+
   @Unique
   private static void renderMenuBackgroundTexture(final GuiGraphics graphics, final ResourceLocation menuBackground, final int x, final int y, final float u, final float v, final int width, final int height) {
     int size = 32;
