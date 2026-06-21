@@ -1,9 +1,14 @@
 package magic.transparent_gui_background.mixin.renderer;
 
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.vertex.VertexSorting;
 import magic.transparent_gui_background.mixin.utils.PostChainAccessor;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import magic.transparent_gui_background.gui.api.GameRendererExtended;
 import magic.transparent_gui_background.gui.api.PostChainExtended;
+
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -19,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import org.joml.Matrix4f;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonSyntaxException;
 
@@ -49,12 +55,31 @@ public class GameRendererMixin implements GameRendererExtended {
   @Unique
   @Override
   public void TGB$renderBlur(float radius, float delta) {
+
     // verify that the radius is more than or isequal to 1.0F
     if (this.blurEffect != null && radius >= 1.0F) {
+      // Correctly assign matrices
+      Window window = this.minecraft.getWindow();
+      int width = window.getWidth();
+      int height = window.getHeight();
+
+      // Set ortho matrix
+      Matrix4f ortho = new Matrix4f().setOrtho(
+          0.0F, (float) width,
+          (float) height, 0.0F,
+          1000.0F, 21000.0F
+      );
+      RenderSystem.setProjectionMatrix(ortho, VertexSorting.DISTANCE_TO_ORIGIN);
+
       // Apply blur effect
       ((PostChainExtended) this.blurEffect).TGB$setUniform("Radius", radius);
       // run our initialized blur shader
       this.blurEffect.process(delta);
+
+      // Restore — important so normal 3D rendering isn't broken
+      // (The 3D path will overwrite this anyway, but lets be safe)
+      RenderSystem.setProjectionMatrix(new Matrix4f(), VertexSorting.DISTANCE_TO_ORIGIN);
+
     }
   }
 
@@ -78,6 +103,14 @@ public class GameRendererMixin implements GameRendererExtended {
     } catch (JsonSyntaxException e) {
       // Catch shader file syntax errors
       LOGGER.warn("Failed to parse shader: {}", blurShader, e);
+    }
+  }
+
+  // Run the resize function as mats need to be available even without an world loaded
+  @Inject(method = "resize(II)V", at = @At("HEAD"), require = 1)
+  public void beforeResize(int width, int height, CallbackInfo ci) {
+    if (this.blurEffect != null) {
+      this.blurEffect.resize(width, height);
     }
   }
 
