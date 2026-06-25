@@ -87,6 +87,7 @@ public class GameRendererMixin implements GameRendererExtended {
     if (this.blurEffect != null) {
       // reinitialize it
       this.blurEffect.close();
+      this.blurEffect = null;
     }
 
     try {
@@ -95,9 +96,11 @@ public class GameRendererMixin implements GameRendererExtended {
     } catch (IOException e) {
       // Catch Weird exceptions
       LOGGER.warn("Failed to load shader: {}", blurShader, e);
+      this.blurEffect = null;
     } catch (JsonSyntaxException e) {
       // Catch shader file syntax errors
       LOGGER.warn("Failed to parse shader: {}", blurShader, e);
+      this.blurEffect = null;
     }
   }
 
@@ -126,8 +129,9 @@ public class GameRendererMixin implements GameRendererExtended {
   // Correctly close our created object so it doesnt become an strangling constructor
   @Inject(method = "close()V", at = @At("TAIL"))
   public void afterClose(CallbackInfo ci) {
-    if (blurEffect != null) {
-      blurEffect.close();
+    if (this.blurEffect != null) {
+      this.blurEffect.close();
+      this.blurEffect = null;
     }
   }
 }
