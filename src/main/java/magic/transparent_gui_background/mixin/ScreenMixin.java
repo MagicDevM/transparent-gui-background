@@ -2,6 +2,7 @@ package magic.transparent_gui_background.mixin;
 
 import magic.transparent_gui_background.gui.api.GameRendererExtended;
 import magic.transparent_gui_background.gui.api.PanoramaRendererExtended;
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.Screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.PanoramaRenderer;
@@ -45,11 +46,8 @@ public class ScreenMixin {
     panoramaRenderer = new PanoramaRenderer(cubeMap);
   }
 
-  @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
-  private void renderBackground(GuiGraphics graphics, CallbackInfo ci) {
-    // Get current delta value
-    float delta = this.minecraft.getFrameTime();
-
+  @Unique
+  private void renderBackground(GuiGraphics graphics, float delta) {
     // Check if player is in a world
     if (this.minecraft.level == null) {
       // load transparent panoroma
@@ -59,6 +57,19 @@ public class ScreenMixin {
     // render the blurred panoroma
     this.renderBlurredBackground(delta);
     this.renderMenuBackground(graphics);
+  }
+
+  // Inject our renderBackground method into render
+  @Inject(method = "render", at = @At("HEAD"))
+  public final void beforeRender(GuiGraphics graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    if ((Object)this instanceof TitleScreen) return;
+
+    this.renderBackground(graphics, delta);
+  }
+
+  @Inject(method = "renderBackground", at = @At("HEAD"), cancellable = true)
+  private void cancelRenderBackground(GuiGraphics graphics, CallbackInfo ci) {
+    if ((Object)this instanceof TitleScreen) return;
 
     // Cancel the entire method
     ci.cancel();

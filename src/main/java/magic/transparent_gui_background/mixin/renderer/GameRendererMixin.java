@@ -52,15 +52,25 @@ public class GameRendererMixin implements GameRendererExtended {
   private PostChain blurEffect;
 
   @Unique
+  private float currentBlur = 0.0F;
+
+  @Unique
   @Override
   public void TGB$renderBlur(float radius, float delta) {
-    // verify that the radius is more than or isequal to 1.0F
-    if (this.blurEffect != null && radius >= 1.0F) {
-      // Apply blur effect
-      ((PostChainExtended) this.blurEffect).TGB$setUniform("Radius", radius);
-      // run our initialized blur shader
-      this.blurEffect.process(delta);
+    if (radius < 1.0F) {
+      // Reset for next blur
+      this.currentBlur = 0.0F;
+      return;
     }
+
+    if (this.blurEffect == null) return;
+    if (this.currentBlur == radius) return;
+    this.currentBlur = radius;
+
+    // Apply blur effect
+    ((PostChainExtended) this.blurEffect).TGB$setUniform("Radius", radius);
+    // run our initialized blur shader
+    this.blurEffect.process(delta);
   }
 
   @Unique
