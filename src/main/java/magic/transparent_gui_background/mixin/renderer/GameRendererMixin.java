@@ -54,6 +54,10 @@ public class GameRendererMixin implements GameRendererExtended {
   @Unique
   @Override
   public void TGB$renderBlur(float radius, float delta) {
+    // Reinit PostChain if it doesnt exist
+    if (this.blurEffect == null) loadBlurEffect();
+    // Silently fail if it didnt initialize
+    if (this.blurEffect == null) return;
     // verify that the radius is more than or isequal to 1.0F
     if (this.blurEffect != null && radius >= 1.0F) {
       // Correctly assign matrices
@@ -107,8 +111,10 @@ public class GameRendererMixin implements GameRendererExtended {
   // Run the resize function as mats need to be available even without an world loaded
   @Inject(method = "resize(II)V", at = @At("HEAD"), require = 1)
   public void beforeResize(int width, int height, CallbackInfo ci) {
+    // Lazily reinit the constructor on resize
     if (this.blurEffect != null) {
-      this.blurEffect.resize(width, height);
+      this.blurEffect.close();
+      this.blurEffect = null;
     }
   }
 
