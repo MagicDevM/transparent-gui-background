@@ -9,6 +9,6 @@ public interface PostChainExtended {
    *
    * @param type is the type of pass
    * @param value is the values for that pass
-   */
+  */
   void TGB$setUniform(String type, float value);
 }

@@ -54,34 +54,12 @@ public class GameRendererMixin implements GameRendererExtended {
   @Unique
   @Override
   public void TGB$renderBlur(float radius, float delta) {
-    // Reinit PostChain if it doesnt exist
-    if (this.blurEffect == null) loadBlurEffect();
-    // Silently fail if it didnt initialize
-    if (this.blurEffect == null) return;
     // verify that the radius is more than or isequal to 1.0F
     if (this.blurEffect != null && radius >= 1.0F) {
-      // Correctly assign matrices
-      // Get current window size to avoid weird scale issues
-      Window window = this.minecraft.getWindow();
-      int width = window.getWidth();
-      int height = window.getHeight();
-
-      // Set ortho matrix
-      Matrix4f ortho = new Matrix4f().setOrtho(
-          0.0F, (float) width,
-          (float) height, 0.0F,
-          1000.0F, 21000.0F
-      );
-      RenderSystem.setProjectionMatrix(ortho, VertexSorting.DISTANCE_TO_ORIGIN);
-
       // Apply blur effect
       ((PostChainExtended) this.blurEffect).TGB$setUniform("Radius", radius);
       // run our initialized blur shader
       this.blurEffect.process(delta);
-
-      // Restore — important so normal 3D rendering isn't broken
-      // (The 3D path will overwrite this anyway, but lets be safe)
-      RenderSystem.setProjectionMatrix(new Matrix4f(), VertexSorting.DISTANCE_TO_ORIGIN);
     }
   }
 
@@ -91,12 +69,13 @@ public class GameRendererMixin implements GameRendererExtended {
     if (this.blurEffect != null) {
       // reinitialize it
       this.blurEffect.close();
-      this.blurEffect = null;
     }
 
     try {
       // create an new PostChain pass
       this.blurEffect = new PostChain(this.minecraft.getTextureManager(), this.minecraft.getResourceManager(), this.minecraft.getMainRenderTarget(), blurShader);
+      Window window = this.minecraft.getWindow();
+      this.blurEffect.resize(window.getWidth(), window.getHeight());
     } catch (IOException e) {
       // Catch Weird exceptions
       LOGGER.warn("Failed to load shader: {}", blurShader, e);
@@ -109,12 +88,11 @@ public class GameRendererMixin implements GameRendererExtended {
   }
 
   // Run the resize function as mats need to be available even without an world loaded
-  @Inject(method = "resize(II)V", at = @At("HEAD"), require = 1)
+  @Inject(method = "resize(II)V", at = @At("HEAD"))
   public void beforeResize(int width, int height, CallbackInfo ci) {
-    // Lazily reinit the constructor on resize
+    // Resize correctly on every resize event
     if (this.blurEffect != null) {
-      this.blurEffect.close();
-      this.blurEffect = null;
+      this.blurEffect.resize(width, height);
     }
   }
 
@@ -137,7 +115,6 @@ public class GameRendererMixin implements GameRendererExtended {
   public void afterClose(CallbackInfo ci) {
     if (this.blurEffect != null) {
       this.blurEffect.close();
-      this.blurEffect = null;
     }
   }
 }
